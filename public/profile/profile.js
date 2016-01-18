@@ -21,23 +21,31 @@ angular.module('newJobs.userProfile', ['ngRoute', 'ngResource'])
 		return $resource('/api/user/:id');
 	})
 	.controller('profileController', function($scope, $rootScope, $http, jobService, profileService) {
+
+		//--------------Update profile functionality ----------
 		$scope.myProfile = profileService.get();
-		// console.log($scope.myProfile);
 
 		$scope.addingSkill = false;
+		$scope.myProfile.skills = [];
 		$scope.newSkill = {};
-
 		$scope.addSkill = function() {
 			$scope.myProfile.skills.push($scope.newSkill);
 			$scope.newSkill = {};
-		}
+		};
+		$scope.removeSkill = function(skill) {
+			var index = $scope.myProfile.skills.indexOf(skill);
+			$scope.myProfile.skills.splice(index, 1);
+		};
+
+		$scope.career_levels = ['Starter', 'Mid level', 'Expert'],
+
 		$scope.updateProfile = function() {
 			$http.put('/api/profile', $scope.myProfile).then(function(res) {
 				console.log(res);
 			})
 		};
 
-		// my jobs
+		//------------my jobs---------------
 		$scope.myJobs = jobService.query({
 			username: $rootScope.current_user.username
 		});
