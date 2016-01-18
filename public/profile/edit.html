@@ -90,6 +90,31 @@
 				<button type="submit" ng-click="addSkill()">+</button>
 			</div>
 		</div>
+
+		<!--====== OTHER SKILLS  =====-->
+		<div class="form-group">
+			<label for="other_skills">Other Skills</label>
+			<small ng-repeat="skill in myProfile.other_skills">{{skill.name}}<a href="" ng-click="removeOtherSkill(skill)">remove</a><br></small>
+			
+			<div class="">
+				<input class="form-control" id="other_skills" type="text" ng-model="otherSkill.name" placeholder="type a skill and click + e.g. javascript">
+				<button type="submit" ng-click="addOtherSkill()">+</button>
+			</div>
+		</div>
+
+		<!--====== SOCIAL ACCOUNTS  =====-->
+		<!-- LinkedIn  -->
+		<div class="form-group">
+			<label for="linkedin">LinkedIn</label>
+			<input class="form-control" id="linkedin" type="text" ng-model="myProfile.linkedin" placeholder="linkedin">
+		</div>
+
+		<!-- twitter  -->
+		<div class="form-group">
+			<label for="twitter">Twitter</label>
+			<input class="form-control" id="twitter" type="text" ng-model="myProfile.twitter" placeholder="twitter">
+		</div>
+		
 		
 		<!--====== RESET PASSWORD =====-->
 		<div class="form-group">

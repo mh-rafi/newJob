@@ -15,7 +15,8 @@ var userSchema = Schema({
 	career_level: String,
 	skills: [],
 	other_skills: [],
-	social_accounts: [],
+	linkedin: String,
+	twitter: String,
 	username: String,
 	password: String,
 	created_at: {type: Date, default: Date.now()}

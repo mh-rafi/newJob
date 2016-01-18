@@ -24,8 +24,10 @@ angular.module('newJobs.userProfile', ['ngRoute', 'ngResource'])
 
 		//--------------Update profile functionality ----------
 		$scope.myProfile = profileService.get();
+		$scope.career_levels = ['Starter', 'Mid level', 'Expert'],
 
-		$scope.addingSkill = false;
+			/*---------- SKILLS ----------*/
+			$scope.addingSkill = false;
 		$scope.myProfile.skills = [];
 		$scope.newSkill = {};
 		$scope.addSkill = function() {
@@ -37,7 +39,21 @@ angular.module('newJobs.userProfile', ['ngRoute', 'ngResource'])
 			$scope.myProfile.skills.splice(index, 1);
 		};
 
-		$scope.career_levels = ['Starter', 'Mid level', 'Expert'],
+		/*---------- OTHER SKILLS ----------*/
+		$scope.myProfile.other_skills = [];
+		$scope.otherSkill = {};
+		$scope.addOtherSkill = function() {
+			$scope.myProfile.other_skills.push($scope.otherSkill);
+			$scope.otherSkill = {};
+		};
+		$scope.removeOtherSkill = function(skill) {
+			var index = $scope.myProfile.other_skills.indexOf(skill);
+			$scope.myProfile.other_skills.splice(index, 1);
+		};
+
+		/*--------- SOCIAL ACCOUNTS ---------*/
+		$scope.myProfile.social_accounts = [{name: 'facebook'}, {name: 'twitter'}, {name: 'google'}];
+		// $scope.soc_accounts = [{name: 'facebook'}, {name: 'twitter'}, {name: 'google'}]
 
 		$scope.updateProfile = function() {
 			$http.put('/api/profile', $scope.myProfile).then(function(res) {
@@ -55,7 +71,7 @@ angular.module('newJobs.userProfile', ['ngRoute', 'ngResource'])
 				id: jobId
 			}, function(resp) {
 				console.log(resp.message);
-				
+
 				$scope.myJobs = jobService.query({
 					username: $rootScope.current_user.username
 				});
@@ -63,16 +79,16 @@ angular.module('newJobs.userProfile', ['ngRoute', 'ngResource'])
 		}
 	})
 
-	// public profile
-	.controller('userController', function($scope, $routeParams, userService, jobService) {
-		$scope.user = userService.get({
-			id: $routeParams.username
-		}, function(err) {
-			console.log(err)
-		});
-
-		// user jobs
-		$scope.userJobs = jobService.query({
-			username: $routeParams.username
-		});
+// public profile
+.controller('userController', function($scope, $routeParams, userService, jobService) {
+	$scope.user = userService.get({
+		id: $routeParams.username
+	}, function(err) {
+		console.log(err)
 	});
+
+	// user jobs
+	$scope.userJobs = jobService.query({
+		username: $routeParams.username
+	});
+});
