@@ -1,0 +1,12 @@
+<div class="clearfix">
+</div>
+<div id="post-stream">
+	<h4>Job Feed</h4>
+		<div class="post" ng-repeat="job in jobs | orderBy:'created_at':true" ng-class-odd="'odd'" ng-class-even="'even'"> 
+			<h4>{{job.title}}</h4>
+			<p>{{job.description}}</p>
+			<small>Posted by @{{job._author}}</small>
+			<small class="pull-right">{{job.created_at | date:"h:mma 'on' MMM d, y"}}</small>
+			<small><a href="#/job/{{job._id}}">Details</a></small>
+		</div>
+</div>

@@ -1,0 +1,15 @@
+<div class="col-md-8">
+	<h2>{{job.title}} at {{job.company}}</h2>
+	<p>{{job.description}}</p>
+	<p><strong>Salary: </strong>{{job.wage}}</p>
+</div>
+<div class="col-md-4">
+	<div class="message">{{message}}</div>
+	<a href="" ng-click="applyJob()" class="btn btn-primary">Appy this Job</a>
+	<div class="applicats">
+		<h4>Applicants</h4>
+		<ul>
+			<li ng-repeat="applicant in job.applicants"><a href="#/user/{{applicant}}">{{applicant}}</a></li>
+		</ul>
+	</div>
+</div>

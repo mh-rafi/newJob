@@ -1,0 +1,20 @@
+body {
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+a {
+  color: #00B7FF;
+}
+
+.post {
+	padding: 20px 15px;
+}
+
+.post.odd {
+	
+	background: #eee;
+}
+
+.post.even {
+	background: #f7f7f7;
+}

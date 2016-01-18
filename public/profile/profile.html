@@ -1,0 +1,22 @@
+<div class="post_container my_posts">
+	<div class="side_area">
+		<ul>
+			<li><a href="#/profile/edit">Edit profile</a></li>
+			<li><a href="#/new-job">Add a job</a></li>
+		</ul>
+	</div>
+
+	<div class="col-md-6">
+		<h3 class="my_name">{{myProfile.first_name}} {{myProfile.last_name}}</h3>
+		<p>{{myProfile.title}}</p>
+		<p><strong>Username: </strong>{{myProfile.username}}</p>
+	</div>
+	<div class="col-md-6">
+		<div class="post" ng-repeat="job in myJobs | orderBy:'created_at':true" ng-class-odd="'odd'" ng-class-even="'even'">
+			<p>{{job.title}}</p>
+			<small>Posted by @{{job._author}}</small>
+			<small class="pull-right">{{job.created_at | date:"h:mma 'on' MMM d, y"}}</small>
+			<a href="" ng-click="deleteJob(job._id)">Delete</a>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,60 @@
+<div class="job_edit">
+	<div class="back_to_home">
+		<a href="#/">&larr; Home</a>
+	</div>
+	<form>
+		<div class="form-group">
+	    	<label for="title">Job Title</label>
+	    	<input type="text" class="form-control" id="title" ng-model="newJob.title" placeholder="">
+	  	</div>
+
+		<div class="form-group">
+			<label for="description">Description</label>
+			<textarea class="form-control" name="description" id="description" cols="30" rows="10" placeholder="Description" ng-model="newJob.description"></textarea>
+		</div>
+
+		<div class="form-group">
+	    	<label for="wage">Wage</label>
+	    	<input type="number" class="form-control" id="wage" ng-model="newJob.wage">
+	  	</div>
+
+		<div class="form-group">
+	    	<label for="category">Category</label>
+	    	<input type="text" class="form-control" id="category" ng-model="newJob.category">
+	  	</div>
+
+	  	<div class="form-group">
+	    	<label for="location">Location</label>
+	    	<input type="text" class="form-control" id="location" ng-model="newJob.location">
+	  	</div>
+
+		<div class="form-group">
+			<label for="password">Company</label>
+			<input type="text" class="form-control" id="password" ng-model="newJob.company" placeholder="Company">
+		</div>
+
+		<div class="form-group">
+			<label for="required_skills">Required skills</label>
+			<small ng-repeat="skill in newJob.required_skills">{{skill.name}}  {{skill.score}}<a href="" ng-click="removeSkill(skill)">remove</a> <br></small>
+
+			<div class="add_required_skills">
+				<input type="text" class="form-control" id="required_skills" ng-model="newSkill.name" placeholder="Skill">
+				<input type="number" class="form-control" min="1" max="10" id="required_skills" ng-model="newSkill.score" placeholder="rating. (value must be 1-10)">
+			</div>
+			<button ng-click="addSkill()">Add skill</button>
+		</div>
+
+		<div class="form-group">
+			<label for="additional_req">Additional requirements</label>
+			<small ng-repeat="requirement in newJob.additional_requirements">{{requirement.name }} 
+				<a href="" ng-click="removeRequirement(requirement)">remove</a><br></small>
+
+			<div class="additional_requirements">
+				<input type="text" class="form-control" id="additional_req" ng-model="additional_req.name" placeholder="Additional requirements">
+				<button ng-click="addRequirement()">Add requirement</button>
+			</div>
+		</div>
+
+		<button type="submit" class="btn btn-default" ng-click="addJob()">Publish Job</button>
+	</form>
+</div>
