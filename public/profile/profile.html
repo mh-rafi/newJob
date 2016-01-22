@@ -1,22 +1,91 @@
-<div class="post_container my_posts">
-	<div class="side_area">
-		<ul>
-			<li><a href="#/profile/edit">Edit profile</a></li>
-			<li><a href="#/new-job">Add a job</a></li>
-		</ul>
-	</div>
+<section class="section_user">
+	<div class="container">
+		<div class="col-md-4 sidebar user_sidebar sidebar_left box">
+			<ul class="profile_admin_menu">
+				<li><a href="#/profile/edit">Edit profile</a></li>
+				<li><a href="#/new-job">Add a job</a></li>
+			</ul>
+			<h4 class="sidebar_title">Details</h4>
+			<table>
+				<tbody>
+					<tr>
+						<td>Name:</td>
+						<td>{{myProfile.first_name}} {{myProfile.last_name}}</td>
+					</tr>
+					<tr>
+						<td>Age:</td>
+						<td>{{myProfile.age}}</td>
+					</tr>
+					<tr>
+						<td>Location:</td>
+						<td>{{myProfile.location}}</td>
+					</tr>
+					<tr>
+						<td>Experience:</td>
+						<td>{{myProfile.experience}}</td>
+					</tr>
+					<tr>
+						<td>Degree:</td>
+						<td>{{myProfile.edu_degrees}}</td>
+					</tr>
+					<tr>
+						<td>Career level:</td>
+						<td>{{myProfile.career_level}}</td>
+					</tr>
+					<tr>
+						<td>Email:</td>
+						<td>{{myProfile.email}}</td>
+					</tr>
+					<tr>
+						<td>Website</td>
+						<td><a href="{{myProfile.website}}">{{myProfile.website}}</a></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
 
-	<div class="col-md-6">
-		<h3 class="my_name">{{myProfile.first_name}} {{myProfile.last_name}}</h3>
-		<p>{{myProfile.title}}</p>
-		<p><strong>Username: </strong>{{myProfile.username}}</p>
-	</div>
-	<div class="col-md-6">
-		<div class="post" ng-repeat="job in myJobs | orderBy:'created_at':true" ng-class-odd="'odd'" ng-class-even="'even'">
-			<p>{{job.title}}</p>
-			<small>Posted by @{{job._author}}</small>
-			<small class="pull-right">{{job.created_at | date:"h:mma 'on' MMM d, y"}}</small>
-			<a href="" ng-click="deleteJob(job._id)">Delete</a>
+		<div class="col-md-8 user_body rightside_body">
+			<div class="box">
+				<h3 class="user_name">{{myProfile.first_name}} {{myProfile.last_name}}</h3>
+				<div class="user_title">{{myProfile.title}}</div>
+				<div class="user_socials">
+					<a href="{{myProfile.linkedin}}">LinkedIn</a>
+					<a href="{{myProfile.twitter}}">Twitter</a>
+				</div>
+				<div class="user_bio">{{myProfile.bio}}</div>
+
+				<div class="user_skills">
+					<h4>Main Skills</h4>
+					<div class="user_skill" ng-repeat="skill in myProfile.skills">
+						{{skill.name}}
+						<div class="skill_bar_wrap">
+							<div style="width: {{skill.score * 10}}%" class="skill_bar"></div>
+						</div>
+					</div>
+				</div>
+
+				<div class="user_other_skills">
+					<h4>Other Skills</h4>
+					<div class="other_skill" ng-repeat="skill in myProfile.other_skills">{{skill.name}}</div>
+				</div>
+			</div>
+
+
+			<div class="users_job">
+				<h2>Job posted by {{myProfile.first_name}} {{myProfile.last_name}}</h2>
+
+				<div class="job_single box" ng-repeat="job in myJobs | orderBy:'created_at':true" ng-class-odd="'odd'" ng-class-even="'even'"> 
+		        <header>
+		          <h4 class="job_title">{{job.title}}</h4>
+		          <div class="job_company">{{job.company}}, {{job.location}}</div>
+		        </header>
+		        <p>{{job.description}}</p>
+		        <small class="pull-right created_at">{{job.created_at | date:"h:mma 'on' MMM d, y"}}</small>
+		        <small><a href="#/job/{{job._id}}">View Details</a></small>
+		        <small><a class="text-danger" href="" ng-click="deleteJob(job._id)">Delete Job</a></small>
+		      </div>
+			</div>
+
 		</div>
 	</div>
-</div>
+</section>

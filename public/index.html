@@ -2,13 +2,15 @@
 <html ng-app="newJobs" lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>Chirp</title>
+	<title>NewJob - land your dream job</title>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Roboto+Condensed:400,700' rel='stylesheet' type='text/css'>
   <link rel="stylesheet" href="css/bootstrap/dist/css/bootstrap.min.css">
 	<link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 	<nav class="navbar navbar-default">
-    <div class="container">
+    <div class="container header_container">
       <!-- Brand and toggle get grouped for better mobile display -->
       <div class="navbar-header">
         <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
@@ -27,20 +29,22 @@
         </ul>
          <ul class="nav navbar-nav navbar-right">
           <li ng-hide="authenticated"><a href="#/login">Login</a></li>
-          <li ng-hide="authenticated"><a href="#/register">Sign up</a></li>
+          <li ng-hide="authenticated"><a href="#/register">Register</a></li>
           <li ng-show="authenticated"><a href="#/profile">{{current_user.username}}</a></li>
-          <li ng-show="authenticated"><a href="#" ng-click="signOut()">Sign out</a></li>
+          <li ng-show="authenticated"><a href="#" ng-click="signOut()">Log out</a></li>
         </ul>
       </div><!-- /.navbar-collapse -->
     </div><!-- /.container-fluid -->
   </nav>
 
-	<div class="container">
-		<div class="col-md-offset-2 col-md-8">
-			<div ng-view></div>
-		</div>
-	</div>
-
+<div ng-view></div>
+<div class="section_loading" ng-show="loading">
+  <div class="box loading_box">
+    <div class="load_text">{{loadText}}</div>
+  </div>
+</div>
+  <script src="js/jquery-1.12.0.min.js"></script>
+  <script src="css/bootstrap/js/dropdown.js"></script>
 	<script src="https://code.angularjs.org/1.5.0-beta.2/angular.min.js"></script>
   <script src="https://code.angularjs.org/1.5.0-beta.2/angular-route.min.js"></script>
   <script src="https://code.angularjs.org/1.5.0-beta.2/angular-resource.min.js"></script>

@@ -1,15 +1,67 @@
-<div class="col-md-8">
-	<h2>{{job.title}} at {{job.company}}</h2>
-	<p>{{job.description}}</p>
-	<p><strong>Salary: </strong>{{job.wage}}</p>
-</div>
-<div class="col-md-4">
-	<div class="message">{{message}}</div>
-	<a href="" ng-click="applyJob()" class="btn btn-primary">Appy this Job</a>
-	<div class="applicats">
-		<h4>Applicants</h4>
-		<ul>
-			<li ng-repeat="applicant in job.applicants"><a href="#/user/{{applicant}}">{{applicant}}</a></li>
-		</ul>
+<section class="section_single_job">
+	<div class="container">
+		<div class="col-md-4 sidebar job_sidebar sidebar_left box">
+			<h4 class="sidebar_title">Job details</h4>
+
+			<table>
+				<tbody>
+					<tr>
+						<td>Company:</td>
+						<td>{{job.company}}</td>
+					</tr>
+					<tr>
+						<td>Location:</td>
+						<td>{{job.location}}</td>
+					</tr>
+					<tr>
+						<td>Category:</td>
+						<td>{{job.category}}</td>
+					</tr>
+					<tr>
+						<td>Salary:</td>
+						<td>{{job.wage}}</td>
+					</tr>
+				</tbody>
+			</table>
+
+			<h4 class="sidebar_title">Reqruiter</h4>
+			<a href="#/user/{{job._author}}">{{job._author}}</a>
+		</div>
+		<!-- end sidebar -->
+
+		<div class="col-md-8 job_body rightside_body">
+			<div class="box">
+				<h3 class="job_title">{{job.title}}</h3>
+				<div class="job_company">{{job.company}}</div>
+				<div class="job_description">{{job.description}}</div>
+				
+				<div class="required_skills">
+					<h4>Required skills</h4>
+					<div class="required_skill" ng-repeat="skill in job.required_skills">
+						{{skill.name}}
+						<div class="skill_bar_wrap">
+							<div style="width: {{skill.score * 10}}%" class="skill_bar"></div>
+						</div>
+					</div>
+				</div>
+
+				<div class="additional_requirements">
+					<h4>Additional requirements</h4>
+					<div class="additional_requirement" ng-repeat="requirement in job.additional_requirements">{{requirement.name}}</div>
+				</div>
+
+				<div class="message">{{message}}</div>
+				<a href="" ng-click="applyJob()" class="btn btn-primary">Appy this Job</a>
+			</div>
+			<!-- end box -->
+			
+			<div class="applicats box">
+				<h4>Applicants</h4>
+				<ul>
+					<li ng-repeat="applicant in job.applicants"><a href="#/user/{{applicant}}">{{applicant}}</a></li>
+				</ul>
+			</div>
+		</div>
+		<!-- end body -->
 	</div>
-</div>
+</section>

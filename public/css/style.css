@@ -1,20 +1,269 @@
 body {
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+	position: relative;
+  	font-family: "Lato", Helvetica, Arial, sans-serif;
+  	font-size: 14px;
+  	line-height: 1.5;
+  	background: #f7f7f7;
 }
 
 a {
   color: #00B7FF;
+  -wekit-transition: all .3s;
+  -moz-transition: all .3s;
+  transition: all .3s;
 }
 
-.post {
-	padding: 20px 15px;
+h1, h2, h3, h4, h5, h6 {
+	color: #4A4A4A;
+	font-family: 'Roboto Condensed', sans-serif;
+	text-transform: uppercase;
 }
 
-.post.odd {
-	
-	background: #eee;
+h1 {
+	margin: 0 0 32px;
 }
 
-.post.even {
-	background: #f7f7f7;
+h2 {
+	margin: 0 0 24px;
+}
+
+h3 {
+	margin: 0 0 24px;
+	font-weight: 700;
+}
+
+h4 {
+	margin: 0 0 24px;
+	font-weight: 700;
+}
+
+.box {
+	background: #fff;
+	border-radius: 2px;
+	padding: 20px 30px;
+	box-shadow: 0px 1px 3px 0px rgba(0,0,0,.1);
+	margin-bottom: 24px;
+}
+
+.text_center{
+	text-align: center;
+}
+.btn {
+	color: #fff;
+	border-radius: 2px;
+	border: 0;
+	border-bottom: 2px solid #0C7298;
+	background: #1797c7;
+}
+
+.btn:hover {
+	background: #0C7298;
+	color: #fff;
+}
+
+.btn-lg {
+	font-weight: 700;
+	padding-left: 30px;
+	padding-right: 30px;
+}
+
+.btn_red {
+	background: #F43A3B;
+	border-bottom: 2px solid #C22F2F;
+}
+
+.btn_red:hover {
+	background: #C22F2F;
+	border-bottom: 2px solid #C22F2F;
+}
+
+.section_loading {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	margin: auto;
+	height: 100%;
+	width: 100%;
+	background: rgba(255, 255, 255, .6);
+}
+
+.loading_box {
+	text-align: center;
+	position: fixed;
+	top: 120px;
+	left: 0;
+	right: 0;
+	width: 220px;
+	margin: auto;
+}
+
+/*---------------- header --------------*/
+
+.header_container {
+	margin-top: 8px;
+}
+.navbar {
+	margin-bottom: 0;
+	min-height: 70px;
+	background-color: #fff;
+	border-color: #fff;
+}
+
+
+/*------------- sidebar ------------------*/
+.sidebar h4 {
+	padding-bottom: 15px;
+    border-bottom: 1px solid #E6E6E6;
+}
+
+.sidebar table {
+	width: 100%;
+	margin-bottom: 24px;
+}
+
+.sidebar table > tbody > tr > td:first-child {
+	font-weight: bold;
+    padding-right: 15px;
+}
+
+.sidebar table > tbody > tr > td {
+    padding: 5px 0;
+    border-bottom: 0;
+    line-height: 24px;
+}
+
+
+.rightside_body h4 {
+	margin-bottom: 16px;
+}
+
+
+/*----- Home intro-----*/
+.home_intro {
+	padding: 60px 0;
+	background: url('../images/buildings-skyline.jpg') center center/cover;
+}
+
+.home_intro h2 {
+	margin-bottom: 16px;
+	letter-spacing: 2px;
+}
+
+.home_intro .box {
+	padding: 30px;
+}
+
+.section_feed {
+	padding: 30px 0;
+}
+
+.job_single header {
+	margin-bottom: 16px;
+}
+
+
+.home_sidebar {
+	margin-top: 42px;
+}
+
+
+/*------------ single job page---------------*/
+.section_single_job, .section_user {
+	padding: 40px 0;
+}
+
+.job_title, .user_name {
+	margin-bottom: 2px !important;
+	line-height: 1;
+}
+.job_company, .user_title {
+	color: #989898;
+	font-size: 16px;
+	font-weight: 400;
+	line-height: 1;
+}
+.job_description, .user_bio {
+	padding: 16px 0;
+	margin-bottom: 16px;
+}
+
+.required_skills, .user_skills {
+	margin-bottom: 24px;
+}
+.required_skill, .user_skill {
+	font-size: 16px;
+	font-weight: 700;
+	color: #1797c7;
+	text-transform: uppercase;
+	margin-bottom: 4px;
+	word-spacing: 3px;
+}
+.skill_bar_wrap {
+	height: 8px;
+	margin-bottom: 12px;
+	background: #E7E7E7;
+}
+
+.skill_bar {
+	height: 100%;
+	background: #1797c7;
+}
+
+
+
+.additional_requirements, .user_other_skills {
+	margin-bottom: 24px;
+}
+.additional_requirement, .other_skill {
+	display: inline-block;
+	background: #E7E7E7;
+	padding: 4px 10px;
+	border-radius: 4px;
+	border-bottom: 2px solid #CECECE;
+	margin: 0 5px 5px 0;
+    padding: 5px 20px 3px;
+    text-transform: capitalize;
+    cursor: pointer;
+}
+
+.applicats ul {
+	list-style: none;
+	padding-left: 10px;
+}
+.applicats ul li {}
+.applicats ul li a {
+	font-size: 16px;
+}
+.applicats ul li a:hover {}
+
+/*----------- Job add ----------------*/
+.section_addjob {
+	padding: 40px 0;
+}
+
+/*----------- User page--------------*/
+
+.profile_admin_menu {
+	list-style: none;
+	padding-left: 0;
+	margin-bottom: 24px;
+}
+.profile_admin_menu li {
+
+}
+
+/*---------- Profile update-----------------*/
+
+.section_profile_update {
+	padding: 40px 0;
+}
+.back_to {
+	margin-bottom: 24px;
+}
+
+/*----------- Login/signUP ------------*/
+
+.section_auth {
+	padding: 80px 0;
 }

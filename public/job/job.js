@@ -10,7 +10,7 @@ angular.module('newJobs.job', ['ngRoute', 'ngResource'])
 				controller: 'jobController'
 			})
 	}])
-	.controller('jobController', function($scope, $routeParams, jobService, $http) {
+	.controller('jobController', function($scope, $rootScope, $routeParams, $location, $timeout, jobService, $http) {
 		$scope.message = '';
 		if ($routeParams.jobId) {
 			$scope.job = jobService.get({
@@ -55,9 +55,24 @@ angular.module('newJobs.job', ['ngRoute', 'ngResource'])
 		};
 
 		$scope.addJob = function() {
+			$rootScope.loading = true;
+			$rootScope.loadText = 'Publishing job...';
+
 			jobService.save($scope.newJob, function(res) {
 				$scope.newJob = {};
-				console.log(res)
+				$rootScope.loadText = 'Success!';
+				$timeout(function() {
+					$rootScope.loading = false;
+					$rootScope.loadText = 'Loading..';
+					$location.path('/profile');
+				}, 1500);
+				//console.log(res)
+			}, function(err) {
+				$rootScope.loadText = 'Unable to publish job!';
+				$timeout(function() {
+					$rootScope.loading = false;
+					$rootScope.loadText = 'Loading..';
+				}, 1500);
 			});
 		};
 	})

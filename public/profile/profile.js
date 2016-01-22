@@ -20,9 +20,9 @@ angular.module('newJobs.userProfile', ['ngRoute', 'ngResource'])
 	.factory('userService', function($resource) {
 		return $resource('/api/user/:id');
 	})
-	.controller('profileController', function($scope, $rootScope, $http, jobService, profileService) {
+	.controller('profileController', function($scope, $rootScope, $http, $timeout, $location, jobService, profileService) {
 
-		//--------------Update profile functionality ----------
+		//---============ Update profile functionality =========---
 		$scope.myProfile = profileService.get();
 		$scope.career_levels = ['Starter', 'Mid level', 'Expert'],
 
@@ -56,12 +56,25 @@ angular.module('newJobs.userProfile', ['ngRoute', 'ngResource'])
 		// $scope.soc_accounts = [{name: 'facebook'}, {name: 'twitter'}, {name: 'google'}]
 
 		$scope.updateProfile = function() {
+			$rootScope.loading = true;
+			$rootScope.loadText = 'Updating profile...';
 			$http.put('/api/profile', $scope.myProfile).then(function(res) {
-				console.log(res);
-			})
+				$rootScope.loadText = 'Success!';
+				$timeout(function() {
+					$rootScope.loading = false;
+					$rootScope.loadText = 'Loading..';
+					$location.path('/profile');
+				}, 1500);
+			}).catch(function() {
+				$rootScope.loadText = 'Unable to update profile!';
+				$timeout(function() {
+					$rootScope.loading = false;
+					$rootScope.loadText = 'Loading..';
+				}, 1500);
+			});
 		};
 
-		//------------my jobs---------------
+		//------=======my jobs======--------
 		$scope.myJobs = jobService.query({
 			username: $rootScope.current_user.username
 		});

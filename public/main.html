@@ -1,12 +1,46 @@
-<div class="clearfix">
-</div>
-<div id="post-stream">
-	<h4>Job Feed</h4>
-		<div class="post" ng-repeat="job in jobs | orderBy:'created_at':true" ng-class-odd="'odd'" ng-class-even="'even'"> 
-			<h4>{{job.title}}</h4>
-			<p>{{job.description}}</p>
-			<small>Posted by @{{job._author}}</small>
-			<small class="pull-right">{{job.created_at | date:"h:mma 'on' MMM d, y"}}</small>
-			<small><a href="#/job/{{job._id}}">Details</a></small>
-		</div>
-</div>
+<section class="home_intro text_center">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6">
+       <div class="box">
+          <h2>Need a job ?</h2>
+          <a href="#/register" class="btn btn-lg btn-primary">Register now</a>
+       </div>
+      </div>
+      <div class="col-md-6">
+        <div class="box">
+          <h2>Hire a talent.</h2>
+          <a ng-hide="authenticated" href="#/register" class="btn btn_red btn-lg btn-primary">Post a job</a>
+          <a ng-show="authenticated" href="#/new-job" class="btn btn_red btn-lg btn-primary">Post a job</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="section_feed">
+  <div class="container">
+
+    <div id="job_stream" class="col-md-8">
+      <h4>Job Feed</h4>
+
+      <div class="job_single box" ng-repeat="job in jobs | orderBy:'created_at':true" ng-class-odd="'odd'" ng-class-even="'even'"> 
+        <header>
+          <h4 class="job_title">{{job.title}}</h4>
+          <div class="job_company">{{job.company}}, {{job.location}}</div>
+        </header>
+        <p>{{job.description}}</p>
+        <small class="pull-right created_at">{{job.created_at | date:"h:mma 'on' MMM d, y"}}</small>
+        <small><a href="#/job/{{job._id}}">View Details</a></small>
+      </div>
+
+    </div>
+    
+    <div class="col-md-4 sidebar home_sidebar sidebar_right box">
+      <h4>Home sidebar</h4>
+    </div>
+
+
+  </div>
+</section>

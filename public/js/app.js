@@ -5,7 +5,7 @@ angular.module('newJobs', [
 		'newJobs.userProfile',
 		'newJobs.job'
 	])
-	.run(function($rootScope, $http, $cookieStore) {
+	.run(function($rootScope, $http, $cookieStore, $location) {
 		// Authentication 
 		$rootScope.current_user = $cookieStore.get('user') || {};
 		$rootScope.authenticated = $rootScope.current_user.username ? true : false;
@@ -15,9 +15,12 @@ angular.module('newJobs', [
 			$cookieStore.remove('user');
 			$rootScope.authenticated = false;
 			$rootScope.current_user = '';
+			$location.path('/');
 		};
 
-		// --------
+		// -------- Loading--------
+		$rootScope.loading = false;
+		$rootScope.loadText = '';
 	})
 	.config(['$routeProvider', function($routeProvider) {
 		$routeProvider
@@ -32,6 +35,9 @@ angular.module('newJobs', [
 			.when('/register', {
 				templateUrl: 'register.html',
 				controller: 'authController'
+			})
+			.otherwise({
+				redirectTo: '/'
 			})
 	}])
 	.controller('authController', function($scope, $http, $location, $rootScope, $cookieStore) {

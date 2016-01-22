@@ -1,127 +1,134 @@
-<div class="profile_edit">
-	<div class="back_to_profile">
-		<a href="#/profile">&larr;Back to profile</a>
+<section class="section_profile_update">
+	<div class="container">
+		<div class="back_to col-md-12">
+			<a class="btn" href="#/profile">&larr; Back to profile</a>
+		</div>
+		<div class="profile_edit_form">
+			<form ng-submit="updateProfile();">
+				<div class="col-md-6">
+					<!--====== TITLE =====-->
+					<div class="form-group">
+				    	<label for="title">Title</label>
+				    	<input type="text" class="form-control" id="title" ng-model="myProfile.title" placeholder="First name">
+				  	</div>
+					
+					<!--====== FIRST NAME=====-->
+					<div class="form-group">
+				    	<label for="first_name">First name</label>
+				    	<input type="text" class="form-control" id="first_name" ng-model="myProfile.first_name" placeholder="First name">
+				  	</div>
+					
+					<!--====== LAST NAME=====-->
+				  	<div class="form-group">
+				    	<label for="last_name">Last name</label>
+				    	<input type="text" class="form-control" id="last_name" ng-model="myProfile.last_name" placeholder="Last name">
+				  	</div>
+					
+					<!--====== USERNAME =====-->
+					<div class="form-group">
+				    	<label for="username">Username</label>
+				    	<input type="text" class="form-control" id="username" disabled ng-model="myProfile.username">
+				  	</div>
+					
+					<!--====== EMAIL =====-->
+					<div class="form-group">
+						<label for="email">Email address</label>
+						<input type="email" class="form-control" id="email" ng-model="myProfile.email" placeholder="Email">
+					</div>
+					
+					<!--====== WEBSITE =====-->
+					<div class="form-group">
+						<label for="website">Website</label>
+						<input type="text" class="form-control" id="website" ng-model="myProfile.website" placeholder="Website">
+					</div>
+					
+					<!--====== LOCATION =====-->
+					<div class="form-group">
+						<label for="location">Location</label>
+						<input type="text" class="form-control" id="location" ng-model="myProfile.location" placeholder="Location">
+					</div>
+					
+					<!--====== DEGREES =====-->
+					<div class="form-group">
+						<label for="degrees">Degrees</label>
+						<input type="text" class="form-control" id="degrees" ng-model="myProfile.edu_degrees" placeholder="Degrees">
+					</div>
+					
+					<!--====== EXPERIENCE  =====-->
+					<div class="form-group">
+						<label for="experience">Experience</label>
+						<input type="text" class="form-control" id="experience" ng-model="myProfile.experience" placeholder="Experience">
+					</div>
+					
+					<!--====== CAREER LEVEL  =====-->
+					<div class="form-group">
+						<label for="career_level">Career level</label>
+						<select class="form-control" name="career_level" id="career_level" ng-model="myProfile.career_level">
+							<option ng-repeat="level in career_levels" value="{{level}}" ng-selected="myProfile.career_level == level">{{level}}</option>
+						</select>
+					</div>
+				</div>
+				
+				<div class="col-md-6">
+					<!--====== BIO  =====-->
+					<div class="form-group">
+						<label for="bio">Bio</label>
+						<textarea class="form-control" name="bio" id="bio" cols="30" rows="10" placeholder="Bio" ng-model="myProfile.bio"></textarea>
+					</div>
+					
+					<!--====== AGE  =====-->
+					<div class="form-group">
+						<label for="age">Age</label>
+						<input type="number" class="form-control" name="age" id="age" placeholder="age" ng-model="myProfile.age">
+					</div>
+
+					<!--====== SKILLS  =====-->
+					<div class="form-group">
+						<label for="skills">Skills</label>
+						<small ng-repeat="skill in myProfile.skills">{{skill.name}} {{skill.score}} <a href="" ng-click="removeSkill(skill)">remove</a><br></small>
+						
+						<a href="" ng-click="addingSkill = !addingSkill">add new skill</a>
+						<div class="" ng-show="addingSkill">
+							<input class="form-control" type="text" ng-model="newSkill.name" placeholder="type a skill and click + e.g. javascript">
+							<input class="form-control" type="number" min="1" max="10" ng-model="newSkill.score" placeholder="Skill score.">
+							<button type="submit" ng-click="addSkill()">+</button>
+						</div>
+					</div>
+
+					<!--====== OTHER SKILLS  =====-->
+					<div class="form-group">
+						<label for="other_skills">Other Skills</label>
+						<small ng-repeat="skill in myProfile.other_skills">{{skill.name}}<a href="" ng-click="removeOtherSkill(skill)">remove</a><br></small>
+						
+						<div class="">
+							<input class="form-control" id="other_skills" type="text" ng-model="otherSkill.name" placeholder="type a skill and click + e.g. javascript">
+							<button type="submit" ng-click="addOtherSkill()">+</button>
+						</div>
+					</div>
+
+					<!--====== SOCIAL ACCOUNTS  =====-->
+					<!-- LinkedIn  -->
+					<div class="form-group">
+						<label for="linkedin">LinkedIn</label>
+						<input class="form-control" id="linkedin" type="text" ng-model="myProfile.linkedin" placeholder="linkedin">
+					</div>
+
+					<!-- twitter  -->
+					<div class="form-group">
+						<label for="twitter">Twitter</label>
+						<input class="form-control" id="twitter" type="text" ng-model="myProfile.twitter" placeholder="twitter">
+					</div>
+					
+					
+					<!--====== RESET PASSWORD =====-->
+					<div class="form-group">
+						<label for="password">New Password</label>
+						<input type="password" class="form-control" id="password" ng-model="myProfile.new_password" placeholder="Password">
+					</div>
+					<button type="submit" class="btn">Update profile</button>
+				</div>
+				
+			</form>
+		</div>
 	</div>
-	<form ng-submit="updateProfile();">
-
-		<!--====== TITLE =====-->
-		<div class="form-group">
-	    	<label for="title">Title</label>
-	    	<input type="text" class="form-control" id="title" ng-model="myProfile.title" placeholder="First name">
-	  	</div>
-		
-		<!--====== FIRST NAME=====-->
-		<div class="form-group">
-	    	<label for="first_name">First name</label>
-	    	<input type="text" class="form-control" id="first_name" ng-model="myProfile.first_name" placeholder="First name">
-	  	</div>
-		
-		<!--====== LAST NAME=====-->
-	  	<div class="form-group">
-	    	<label for="last_name">Last name</label>
-	    	<input type="text" class="form-control" id="last_name" ng-model="myProfile.last_name" placeholder="Last name">
-	  	</div>
-		
-		<!--====== USERNAME =====-->
-		<div class="form-group">
-	    	<label for="username">Username</label>
-	    	<input type="text" class="form-control" id="username" disabled ng-model="myProfile.username">
-	  	</div>
-		
-		<!--====== EMAIL =====-->
-		<div class="form-group">
-			<label for="email">Email address</label>
-			<input type="email" class="form-control" id="email" ng-model="myProfile.email" placeholder="Email">
-		</div>
-		
-		<!--====== WEBSITE =====-->
-		<div class="form-group">
-			<label for="website">Website</label>
-			<input type="text" class="form-control" id="website" ng-model="myProfile.website" placeholder="Website">
-		</div>
-		
-		<!--====== LOCATION =====-->
-		<div class="form-group">
-			<label for="location">Location</label>
-			<input type="text" class="form-control" id="location" ng-model="myProfile.location" placeholder="Location">
-		</div>
-		
-		<!--====== DEGREES =====-->
-		<div class="form-group">
-			<label for="degrees">Degrees</label>
-			<input type="text" class="form-control" id="degrees" ng-model="myProfile.edu_degrees" placeholder="Degrees">
-		</div>
-		
-		<!--====== EXPERIENCE  =====-->
-		<div class="form-group">
-			<label for="experience">Experience</label>
-			<input type="text" class="form-control" id="experience" ng-model="myProfile.experience" placeholder="Experience">
-		</div>
-		
-		<!--====== CAREER LEVEL  =====-->
-		<div class="form-group">
-			<label for="career_level">Career level</label>
-			<select class="form-control" name="career_level" id="career_level" ng-model="myProfile.career_level">
-				<option ng-repeat="level in career_levels" value="{{level}}" ng-selected="myProfile.career_level == level">{{level}}</option>
-			</select>
-		</div>
-		
-		<!--====== BIO  =====-->
-		<div class="form-group">
-			<label for="bio">Bio</label>
-			<textarea class="form-control" name="bio" id="bio" cols="30" rows="10" placeholder="Bio" ng-model="myProfile.bio"></textarea>
-		</div>
-		
-		<!--====== AGE  =====-->
-		<div class="form-group">
-			<label for="age">Age</label>
-			<input type="number" class="form-control" name="age" id="age" placeholder="age" ng-model="myProfile.age">
-		</div>
-
-		<!--====== SKILLS  =====-->
-		<div class="form-group">
-			<label for="skills">Skills</label>
-			<small ng-repeat="skill in myProfile.skills">{{skill.name}} {{skill.score}} <a href="" ng-click="removeSkill(skill)">remove</a><br></small>
-			
-			<a href="" ng-click="addingSkill = !addingSkill">add new skill</a>
-			<div class="" ng-show="addingSkill">
-				<input class="form-control" type="text" ng-model="newSkill.name" placeholder="type a skill and click + e.g. javascript">
-				<input class="form-control" type="number" min="1" max="10" ng-model="newSkill.score" placeholder="Skill score.">
-				<button type="submit" ng-click="addSkill()">+</button>
-			</div>
-		</div>
-
-		<!--====== OTHER SKILLS  =====-->
-		<div class="form-group">
-			<label for="other_skills">Other Skills</label>
-			<small ng-repeat="skill in myProfile.other_skills">{{skill.name}}<a href="" ng-click="removeOtherSkill(skill)">remove</a><br></small>
-			
-			<div class="">
-				<input class="form-control" id="other_skills" type="text" ng-model="otherSkill.name" placeholder="type a skill and click + e.g. javascript">
-				<button type="submit" ng-click="addOtherSkill()">+</button>
-			</div>
-		</div>
-
-		<!--====== SOCIAL ACCOUNTS  =====-->
-		<!-- LinkedIn  -->
-		<div class="form-group">
-			<label for="linkedin">LinkedIn</label>
-			<input class="form-control" id="linkedin" type="text" ng-model="myProfile.linkedin" placeholder="linkedin">
-		</div>
-
-		<!-- twitter  -->
-		<div class="form-group">
-			<label for="twitter">Twitter</label>
-			<input class="form-control" id="twitter" type="text" ng-model="myProfile.twitter" placeholder="twitter">
-		</div>
-		
-		
-		<!--====== RESET PASSWORD =====-->
-		<div class="form-group">
-			<label for="password">New Password</label>
-			<input type="password" class="form-control" id="password" ng-model="myProfile.new_password" placeholder="Password">
-		</div>
-
-		<button type="submit" class="btn btn-default">Update profile</button>
-	</form>
-</div>
+</section>
