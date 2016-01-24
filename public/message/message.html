@@ -1,0 +1,22 @@
+<section class="section_messages">
+	<div class="container">
+		<div class="col-md-4 sidebar message_sidebar sidebar_left box">
+			
+		</div>
+		<div class="col-md-8 message_body rightside_body">
+			<div class="box">
+				<div class="all_messages">
+					<div class="single_message" ng-repeat="msg in messages">
+						<p><strong>{{msg._sender}}: </strong>{{msg.text}}</p>
+						<small class="pull-right">{{msg.created_at | date:"h:mma 'on' MMM d, y"}}</small>
+						<hr>
+					</div>
+				</div>
+				<form name="message-form" novalidate>
+					<textarea class="form-control" required id="" cols="30" rows="10" ng-model="message.text"></textarea>
+					<button class="btn btn-primary" ng-click="sendMessage()">Send message</button>
+				</form>
+			</div>
+		</div>
+	</div>
+</section>

@@ -3,7 +3,8 @@ angular.module('newJobs', [
 		'ngResource',
 		'ngCookies',
 		'newJobs.userProfile',
-		'newJobs.job'
+		'newJobs.job',
+		'newJobs.message'
 	])
 	.run(function($rootScope, $http, $cookieStore, $location) {
 		// Authentication 

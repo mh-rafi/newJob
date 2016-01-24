@@ -36,5 +36,15 @@ var jobSchema = Schema({
 	created_at: {type: Date, default: Date.now()}
 });
 
+var msgSchema = Schema({
+	_sender: {type: String, ref: 'User'},
+	_receiver: {type: String, ref: 'User'},
+	text: String,
+	is_read: Boolean,
+	created_at: {type: Date, default: Date.now()}
+});
+
+
 mongoose.model('User', userSchema);
 mongoose.model('Job', jobSchema);
+mongoose.model('Message', msgSchema);
