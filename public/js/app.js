@@ -6,11 +6,10 @@ angular.module('newJobs', [
 		'newJobs.job',
 		'newJobs.message'
 	])
-	.run(function($rootScope, $http, $cookieStore, $location) {
+	.run(function($rootScope, $http, $cookieStore, $location, socket) {
 		// Authentication 
 		$rootScope.current_user = $cookieStore.get('user') || {};
 		$rootScope.authenticated = $rootScope.current_user.username ? true : false;
-		//console.log($cookieStore.get('user'));
 		$rootScope.signOut = function() {
 			$http.get('/auth/signout');
 			$cookieStore.remove('user');
@@ -18,6 +17,26 @@ angular.module('newJobs', [
 			$rootScope.current_user = '';
 			$location.path('/');
 		};
+
+		//------ Message ---------
+		if ($rootScope.authenticated) {
+			socket.emit('new user', {
+				curr_user: $rootScope.current_user.username
+			});
+		};
+
+		$rootScope.msgNotification = 0;
+		$rootScope.unReadMsgs = [];
+		$rootScope.goToMessages = function() {
+			$location.path('/messages/' + $rootScope.unReadMsgs[0]._sender);
+		};
+		$rootScope.notifyUser = function(msg) {
+			$rootScope.unReadMsgs.push(msg);
+			$rootScope.msgNotification++;
+		};
+		socket.on('message', function(message) {
+			$rootScope.notifyUser(message);
+		});
 
 		// -------- Loading--------
 		$rootScope.loading = false;

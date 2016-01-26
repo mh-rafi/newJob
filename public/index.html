@@ -31,6 +31,7 @@
           <li ng-hide="authenticated"><a href="#/login">Login</a></li>
           <li ng-hide="authenticated"><a href="#/register">Register</a></li>
           <li ng-show="authenticated"><a href="#/profile">{{current_user.username}}</a></li>
+          <li ng-show="authenticated"><a href="" ng-click="goToMessages()"><span>Messages {{msgNotification}}</span></a></li>
           <li ng-show="authenticated"><a href="#" ng-click="signOut()">Log out</a></li>
         </ul>
       </div><!-- /.navbar-collapse -->

@@ -35,10 +35,14 @@ angular.module('newJobs.message', ['ngRoute', 'ngResource'])
 		};
 	})
 	.controller('messageController', function($scope, $rootScope, $routeParams, $location, socket) {
-		if ($routeParams.id === $rootScope.current_user.username) {
+		if ($routeParams.id === $rootScope.current_user.username || !$rootScope.authenticated) {
 			return $location.path('/');
 		}
-		// set socket for current user and another user
+		socket.on('error', function(data) {
+			$scope.err_msg = data.msg;
+		});
+
+		// set socket for current user
 		if ($routeParams.id) {
 			socket.emit('new user', {
 				curr_user: $rootScope.current_user.username,
@@ -70,9 +74,15 @@ angular.module('newJobs.message', ['ngRoute', 'ngResource'])
 		};
 
 		socket.on('message', function(message) {
-			message.created_at = Date.now();
-			$scope.messages.push(message);
-			console.log(message.text);
+			if (message._sender === $routeProvider.id) {
+				message.created_at = Date.now();
+				$scope.messages.push(message);
+			}
 		});
 
+		// Connected users
+		socket.emit('connected_users', $rootScope.current_user.username);
+		socket.on('connected_users', function(list) {
+			$scope.connected_users = list;
+		});
 	})

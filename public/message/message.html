@@ -1,10 +1,16 @@
 <section class="section_messages">
 	<div class="container">
 		<div class="col-md-4 sidebar message_sidebar sidebar_left box">
-			
+			<div class="connected_users" ng-show="connected_users">
+				<h4>Connected Users</h4>
+				<ul>
+					<li ng-repeat="connUser in connected_users"><a href="#/messages/{{connUser}}">{{connUser}} <span></span></a></li>
+				</ul>
+			</div>
 		</div>
 		<div class="col-md-8 message_body rightside_body">
 			<div class="box">
+				<div class="text-danger">{{err_msg}}</div>
 				<div class="all_messages">
 					<div class="single_message" ng-repeat="msg in messages">
 						<p><strong>{{msg._sender}}: </strong>{{msg.text}}</p>

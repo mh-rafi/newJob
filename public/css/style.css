@@ -273,3 +273,7 @@ h4 {
 .section_messages {
 	padding: 40px 0;
 }
+.all_messages {
+	max-height: 450px;
+	overflow-y: scroll; 
+}

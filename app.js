@@ -7,8 +7,17 @@ var session = require('express-session');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
+// Initialize mongoDB sessionstore
+var MongoDBStore = require('connect-mongodb-session')(session);
+var sessionStore = new MongoDBStore({
+  uri: 'mongodb://localhost:27017/mongo-express',
+  collection: 'userSessions'
+});
+
+// Loads passpoosrt authentication methods
 var authenticate = require('./routes/authenticate')(passport);
 
+// Initialize Mongo connections and models
 var mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost:27017/mongo-express');
 var models = require('./models/models.js');
@@ -24,11 +33,18 @@ app.set('view engine', 'jade');
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
+
+// Initialize express-session
 app.use(session({
+  store: sessionStore,
   secret: 'session-secret'
-}))
+}));
+
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({
+  extended: false
+}));
+
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -77,4 +93,121 @@ app.use(function(err, req, res, next) {
 });
 
 
-module.exports = app;
+
+
+/******************************************
+ * Module dependencies.
+ ****************************************/
+
+// var app = require('../app');
+var debug = require('debug')('mongo-express:server');
+var http = require('http');
+
+/**
+ * Get port from environment and store in Express.
+ */
+
+var port = normalizePort(process.env.PORT || '3000');
+app.set('port', port);
+
+/**
+ * Create HTTP server.
+ */
+
+var server = http.createServer(app);
+
+
+//Init Socket io.
+var io = require('socket.io').listen(server);
+
+// init passport for socket io
+passportSocketIo = require("passport.socketio");
+io.use(passportSocketIo.authorize({
+  cookieParser: cookieParser,
+  key: 'connect.sid',
+  secret: 'session-secret',
+  store: sessionStore,
+  success:      onAuthorizeSuccess,
+  fail:         onAuthorizeFail,
+}));
+
+function onAuthorizeSuccess(data, accept){
+  console.log('successful connection to socket.io');
+  accept();
+}
+
+function onAuthorizeFail(data, message, error, accept){
+  console.log('failed connection to socket.io:');
+  if(error)
+    accept(new Error(message));
+}
+
+require('./routes/api.message')(io);
+
+/**
+ * Listen on provided port, on all network interfaces.
+ */
+
+server.listen(port);
+server.on('error', onError);
+server.on('listening', onListening);
+
+/**
+ * Normalize a port into a number, string, or false.
+ */
+
+function normalizePort(val) {
+  var port = parseInt(val, 10);
+
+  if (isNaN(port)) {
+    // named pipe
+    return val;
+  }
+
+  if (port >= 0) {
+    // port number
+    return port;
+  }
+
+  return false;
+}
+
+/**
+ * Event listener for HTTP server "error" event.
+ */
+
+function onError(error) {
+  if (error.syscall !== 'listen') {
+    throw error;
+  }
+
+  var bind = typeof port === 'string'
+    ? 'Pipe ' + port
+    : 'Port ' + port;
+
+  // handle specific listen errors with friendly messages
+  switch (error.code) {
+    case 'EACCES':
+      console.error(bind + ' requires elevated privileges');
+      process.exit(1);
+      break;
+    case 'EADDRINUSE':
+      console.error(bind + ' is already in use');
+      process.exit(1);
+      break;
+    default:
+      throw error;
+  }
+}
+
+/**
+ * Event listener for HTTP server "listening" event.
+ */
+
+function onListening() {
+  var addr = server.address();
+  var bind = typeof addr === 'string'
+    ? 'pipe ' + addr
+    : 'port ' + addr.port;
+  debug('Listening on ' + bind);
+}
