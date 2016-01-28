@@ -38,6 +38,7 @@ h4 {
 }
 
 .box {
+	overflow: hidden;
 	background: #fff;
 	border-radius: 2px;
 	padding: 20px 30px;
@@ -269,11 +270,64 @@ h4 {
 }
 
 
-/*----------------------*/
+/*---------- Messages ------------*/
+a.msg_noti {}
+a.msg_noti span.fa {
+	font-size: 16px;
+	margin-left: 4px;
+	color: #F22613;
+}
+
 .section_messages {
 	padding: 40px 0;
 }
+
 .all_messages {
 	max-height: 450px;
 	overflow-y: scroll; 
+}
+
+.connected_users {
+	list-style: none;
+	padding: 0;
+}
+.connected_users li {
+	margin-bottom: 5px;
+}
+.connected_users li a {
+	position: relative;
+	display: block;
+	font-size: 16px;
+	padding: 10px 15px;
+	background: rgba(230, 230, 230, 0.35);
+	color: #666;
+	border-radius: 2px;
+	/*box-shadow: 0px 1px 3px 0px rgba(0,0,0,.1);*/
+}
+.connected_users li a.selected {
+	color: #fff;
+	background: #1797C7;
+}
+
+.connected_users li a:hover {
+	text-decoration: none;
+}
+
+.connected_users li a .chat_icon {
+	font-size: 20px;
+	color: #1797C7;
+	float: right;
+}
+
+.connected_users li a.selected .chat_icon {
+	color: #fff;
+}
+
+.single_message {
+	overflow: hidden;
+    padding: 8px 0 3px 0;
+    border-bottom: 1px solid #E6E6E6;
+}
+.message_input {
+	margin-bottom: 16px;
 }

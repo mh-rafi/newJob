@@ -5,6 +5,7 @@
 	<title>NewJob - land your dream job</title>
   <link href='https://fonts.googleapis.com/css?family=Lato:400,700' rel='stylesheet' type='text/css'>
   <link href='https://fonts.googleapis.com/css?family=Roboto+Condensed:400,700' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" href="css/font-awesome.min.css">
   <link rel="stylesheet" href="css/bootstrap/dist/css/bootstrap.min.css">
 	<link rel="stylesheet" href="css/style.css">
 </head>
@@ -31,7 +32,7 @@
           <li ng-hide="authenticated"><a href="#/login">Login</a></li>
           <li ng-hide="authenticated"><a href="#/register">Register</a></li>
           <li ng-show="authenticated"><a href="#/profile">{{current_user.username}}</a></li>
-          <li ng-show="authenticated"><a href="" ng-click="goToMessages()">Messages<span ng-show="msgNotification">X</span></a></li>
+          <li ng-show="authenticated"><a href="" class="msg_noti" ng-click="goToMessages()">Messages<span ng-show="msgNotification" class="fa fa-exclamation"></span></a></li>
           <li ng-show="authenticated"><a href="#" ng-click="signOut()">Log out</a></li>
         </ul>
       </div><!-- /.navbar-collapse -->

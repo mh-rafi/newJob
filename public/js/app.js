@@ -47,12 +47,12 @@ angular.module('newJobs', [
 				}
 			});
 
-			if(unread && unread.length) {
+			if (unread && unread.length) {
 				$rootScope.msgNotification = true;
 			}
 		};
 
-		if($rootScope.authenticated){
+		if ($rootScope.authenticated) {
 			socket.emit('connected_users', $rootScope.current_user.username);
 		};
 		socket.on('connected_users', function(lists) {
@@ -71,17 +71,33 @@ angular.module('newJobs', [
 			if (destination) {
 				$location.path('/messages/' + destination.name);
 			} else {
-				$location.path('/messages/nouser');
+				$location.path('/messages');
 			}
 			location.reload();
 		};
 		$rootScope.notifyUser = function(msg) {
+			var is_new;
+			var keepGoing = true;
 			$rootScope.msgNotification = true;
 			angular.forEach($rootScope.connUsers, function(value) {
-				if (msg._sender === value.name) {
-					value.has_msg = true;
-				}
+				if (keepGoing) {
+					if (msg._sender === value.name) {
+						value.has_msg = true;
+						is_new = false;
+						keepGoing = false;
+					} else {
+						is_new = true;
+					};
+				};
 			});
+			console.log(is_new);
+			if (is_new) {
+				$rootScope.connUsers.push({
+					name: msg._sender,
+					has_msg: true
+				});
+				console.log("new user")
+			}
 		};
 
 		socket.on('message', function(message) {

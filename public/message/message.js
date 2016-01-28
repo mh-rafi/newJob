@@ -2,7 +2,7 @@ angular.module('newJobs.message', ['ngRoute', 'ngResource'])
 	.config(['$routeProvider', function($routeProvider) {
 		$routeProvider
 			.when('/messages', {
-				templateUrl: 'message/message.html',
+				templateUrl: 'message/connected-users.html',
 				controller: 'messageController'
 			})
 			.when('/messages/:id', {
@@ -39,6 +39,7 @@ angular.module('newJobs.message', ['ngRoute', 'ngResource'])
 			return $location.path('/');
 		}
 		$scope.receiver = $routeParams.id;
+		// $scope.active_class = 
 		// set socket for current user
 		if ($routeParams.id) {
 			socket.emit('new user', {

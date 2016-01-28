@@ -1,0 +1,18 @@
+<section class="section_messages">
+	<div class="container">
+		<div class="col-md-4 sidebar message_sidebar sidebar_left box">
+			<div class="connected_users" ng-show="connUsers">
+				<h4>Connected Users</h4>
+				<ul class="connected_users">
+					<li ng-repeat="connUser in connUsers"><a href="#/messages/{{connUser.name}}">{{connUser.name}} <span ng-show="connUser.has_msg" class="fa fa-comment"></span></a></li>
+				</ul>
+			</div>
+		</div>
+		<div class="col-md-8 message_body rightside_body">
+			<div class="box text-center">
+				<div class="">No user selected</div>
+				
+			</div>
+		</div>
+	</div>
+</section>
