@@ -38,10 +38,7 @@ angular.module('newJobs.message', ['ngRoute', 'ngResource'])
 		if ($routeParams.id === $rootScope.current_user.username || !$rootScope.authenticated) {
 			return $location.path('/');
 		}
-		socket.on('error', function(data) {
-			$scope.err_msg = data.msg;
-		});
-
+		$scope.receiver = $routeParams.id;
 		// set socket for current user
 		if ($routeParams.id) {
 			socket.emit('new user', {
@@ -59,14 +56,19 @@ angular.module('newJobs.message', ['ngRoute', 'ngResource'])
 		$scope.message = {
 			_sender: $rootScope.current_user.username,
 			_receiver: $routeParams.id,
-			is_read: false
+			is_read: false,
+			text: ''
 		};
 
 		$scope.sendMessage = function() {
+			if (!$routeParams.id || !$scope.message._receiver || !$scope.message.text.trim().length) {
+				return false;
+			};
+
 			$scope.messages.push({
 				_sender: $rootScope.current_user.username,
 				created_at: Date.now(),
-				text: $scope.message.text
+				text: $scope.message.text.trim()
 			});
 
 			socket.emit('message', $scope.message);
@@ -74,15 +76,29 @@ angular.module('newJobs.message', ['ngRoute', 'ngResource'])
 		};
 
 		socket.on('message', function(message) {
-			if (message._sender === $routeProvider.id) {
+			if (message._sender === $routeParams.id) {
 				message.created_at = Date.now();
 				$scope.messages.push(message);
 			}
 		});
 
 		// Connected users
-		socket.emit('connected_users', $rootScope.current_user.username);
-		socket.on('connected_users', function(list) {
-			$scope.connected_users = list;
-		});
+		// socket.emit('connected_users', $rootScope.current_user.username);
+		// socket.on('connected_users', function(list) {
+		// 	$scope.connected_users = list;
+		// 	$rootScope.myUsers = list;
+		// });
+
+		$rootScope.clrNotification = function() {
+			angular.forEach($rootScope.connUsers, function(obj) {
+				if (obj.name === $routeParams.id && obj.has_msg) {
+					socket.emit('clr_notfic', {
+						curr_user: $rootScope.current_user.username,
+						another_user: obj.name
+					});
+
+					obj.has_msg = false;
+				}
+			});
+		}
 	})

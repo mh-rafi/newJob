@@ -16,6 +16,7 @@ angular.module('newJobs', [
 			$rootScope.authenticated = false;
 			$rootScope.current_user = '';
 			$location.path('/');
+			location.reload();
 		};
 
 		//------ Message ---------
@@ -25,18 +26,68 @@ angular.module('newJobs', [
 			});
 		};
 
-		$rootScope.msgNotification = 0;
-		$rootScope.unReadMsgs = [];
+		// Connected users
+		$rootScope.connUsers = [];
+		$rootScope.mkUserList = function(list, unread) {
+			// Prevent creating duplicate items
+			if ($rootScope.connUsers.length) {
+				return false;
+			};
+			angular.forEach(list, function(value) {
+				if (unread.indexOf(value) === -1) {
+					$rootScope.connUsers.push({
+						name: value,
+						has_msg: false
+					});
+				} else {
+					$rootScope.connUsers.push({
+						name: value,
+						has_msg: true
+					});
+				}
+			});
+
+			if(unread && unread.length) {
+				$rootScope.msgNotification = true;
+			}
+		};
+
+		if($rootScope.authenticated){
+			socket.emit('connected_users', $rootScope.current_user.username);
+		};
+		socket.on('connected_users', function(lists) {
+			$rootScope.mkUserList(lists.userList, lists.userWNM);
+			// $rootScope.myUsers = lists.userList;
+		});
+
+		$rootScope.msgNotification = false;
 		$rootScope.goToMessages = function() {
-			$location.path('/messages/' + $rootScope.unReadMsgs[0]._sender);
+			var destination;
+			angular.forEach($rootScope.connUsers, function(obj) {
+				if (obj.has_msg) {
+					return destination = obj;
+				}
+			});
+			if (destination) {
+				$location.path('/messages/' + destination.name);
+			} else {
+				$location.path('/messages/nouser');
+			}
+			location.reload();
 		};
 		$rootScope.notifyUser = function(msg) {
-			$rootScope.unReadMsgs.push(msg);
-			$rootScope.msgNotification++;
+			$rootScope.msgNotification = true;
+			angular.forEach($rootScope.connUsers, function(value) {
+				if (msg._sender === value.name) {
+					value.has_msg = true;
+				}
+			});
 		};
+
 		socket.on('message', function(message) {
 			$rootScope.notifyUser(message);
 		});
+
 
 		// -------- Loading--------
 		$rootScope.loading = false;
@@ -60,7 +111,7 @@ angular.module('newJobs', [
 				redirectTo: '/'
 			})
 	}])
-	.controller('authController', function($scope, $http, $location, $rootScope, $cookieStore) {
+	.controller('authController', function($scope, $http, $location, $rootScope, $cookieStore, socket) {
 		$scope.user = {};
 
 		$scope.login = function() {
@@ -71,6 +122,7 @@ angular.module('newJobs', [
 
 					$cookieStore.put('user', $rootScope.current_user);
 					$location.path('/');
+					location.reload();
 				} else {
 					$scope.error_message = response.message;
 				}
