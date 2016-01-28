@@ -83,13 +83,6 @@ angular.module('newJobs.message', ['ngRoute', 'ngResource'])
 			}
 		});
 
-		// Connected users
-		// socket.emit('connected_users', $rootScope.current_user.username);
-		// socket.on('connected_users', function(list) {
-		// 	$scope.connected_users = list;
-		// 	$rootScope.myUsers = list;
-		// });
-
 		$rootScope.clrNotification = function() {
 			angular.forEach($rootScope.connUsers, function(obj) {
 				if (obj.name === $routeParams.id && obj.has_msg) {

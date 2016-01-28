@@ -282,11 +282,6 @@ a.msg_noti span.fa {
 	padding: 40px 0;
 }
 
-.all_messages {
-	max-height: 450px;
-	overflow-y: scroll; 
-}
-
 .connected_users {
 	list-style: none;
 	padding: 0;
@@ -323,11 +318,25 @@ a.msg_noti span.fa {
 	color: #fff;
 }
 
+.all_messages {
+	max-height: 450px;
+	overflow-y: scroll;
+	margin-bottom: 16px;
+    border: 1px solid #E6E6E6 
+}
+
 .single_message {
 	overflow: hidden;
-    padding: 8px 0 3px 0;
+    padding: 8px 0 3px 10px;
     border-bottom: 1px solid #E6E6E6;
 }
+.single_message:last-child {
+	border-bottom: none;
+}
+.single_message.receiver {
+	background: #f7f7f7;
+}
+
 .message_input {
 	margin-bottom: 16px;
 }

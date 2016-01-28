@@ -17,7 +17,7 @@
 				<h3>{{receiver}}</h3>
 				<div class="text-danger">{{err_msg}}</div>
 				<div class="all_messages">
-					<div class="single_message" ng-repeat="msg in messages">
+					<div class="single_message" ng-class="{receiver: msg._receiver === receiver}" ng-repeat="msg in messages">
 						<p><strong>{{msg._sender}}: </strong>{{msg.text}}</p>
 						<small class="pull-right">{{msg.created_at | date:"h:mma 'on' MMM d, y"}}</small>
 					</div>
