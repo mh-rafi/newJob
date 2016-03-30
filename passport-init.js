@@ -7,7 +7,7 @@ var Job = mongoose.model('Job');
 
 module.exports = function(passport) {
 
-	/*------------ Provides sesions to user id -------------*/
+	/*------------ Provides user id to session  -------------*/
 	passport.serializeUser(function(user, done) {
 		console.log('serializing user');
 		done(null, user._id);
@@ -68,6 +68,7 @@ module.exports = function(passport) {
 			}
 
 			var newUser = new User({
+				role: 'user',
 				username: username,
 				password: createHash(password)
 			});

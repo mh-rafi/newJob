@@ -4,7 +4,8 @@ angular.module('newJobs', [
 		'ngCookies',
 		'newJobs.userProfile',
 		'newJobs.job',
-		'newJobs.message'
+		'newJobs.message',
+		'newJobs.adminDBoard'
 	])
 	.run(function($rootScope, $http, $cookieStore, $location, socket) {
 		// Authentication 
