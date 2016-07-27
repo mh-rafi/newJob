@@ -7,7 +7,7 @@ var mongoose = require('mongoose');
 var User = mongoose.model('User');
 
 // create reusable transporter object using the default SMTP transport
-var transporter = nodemailer.createTransport('smtps://rafi.bogra%40gmail.com:RAFEE7234@smtp.gmail.com');
+var transporter = nodemailer.createTransport('');
 
 module.exports = function(passport) {
 	router.get('/success', function(req, res) {
