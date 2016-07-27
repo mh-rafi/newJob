@@ -14,13 +14,13 @@ var sessionStore = new MongoDBStore({
   collection: 'userSessions'
 });
 
-// Loads passpoosrt authentication methods
-var authenticate = require('./routes/authenticate')(passport);
-
 // Initialize Mongo connections and models
 var mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost:27017/mongo-express');
 var models = require('./models/models.js');
+
+// Loads passpoosrt authentication methods
+var authenticate = require('./routes/authenticate')(passport);
 
 var api = require('./routes/api.js');
 
@@ -74,6 +74,9 @@ app.use(function(req, res, next) {
 // will print stacktrace
 if (app.get('env') === 'development') {
   app.use(function(err, req, res, next) {
+    console.log('-------------');
+    console.log(err);
+    console.log('-------------');
     res.status(err.status || 500);
     res.render('error', {
       message: err.message,

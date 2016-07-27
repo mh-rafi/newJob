@@ -1,0 +1,14 @@
+<section class="section_auth">
+	<div class="container">
+		<div class="col-md-4 col-md-offset-4 box">
+			<form name="signup_form" class="form-auth" ng-submit="signup_form.$valid && register()">
+				<h2>Register</h2>
+				<p class="text-warning">{{error_message}}</p>
+				<p class="text-success">{{success_message}}</p>
+				<input type="username" ng-model="newUser.username" placeholder="Type new username" class="form-control"><br>
+				<input type="email" ng-model="newUser.email" placeholder="Your Email" class="form-control"><br>
+				<input type="submit" value="Register" class="btn btn-primary" />
+			</form>
+		</div>
+	</div>
+</section>

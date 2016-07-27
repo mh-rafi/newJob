@@ -20,6 +20,8 @@ var userSchema = Schema({
 	twitter: String,
 	username: String,
 	password: String,
+	email_verified: Boolean,
+	verific_code: String,
 	created_at: {type: Date, default: Date.now()}
 });
 

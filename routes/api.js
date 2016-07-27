@@ -8,7 +8,7 @@ var Job = mongoose.model('Job');
 
 router.use(function(req, res, next) {
 	console.log('MiddleWare log');
-	console.log(req.session.passport.user);
+	// console.log(req.session.passport.user);
 	if (req.method === 'GET') {
 		return next();
 	};

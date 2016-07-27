@@ -13,6 +13,18 @@ angular.module('newJobs.userProfile', ['ngRoute', 'ngResource'])
 				templateUrl: 'profile/user.html',
 				controller: 'userController'
 			})
+			.when('/login', {
+				templateUrl: 'profile/login.html',
+				controller: 'authController'
+			})
+			.when('/register', {
+				templateUrl: 'profile/register.html',
+				controller: 'authController'
+			})
+			.when('/verify', {
+				templateUrl: 'profile/verify.html',
+				controller: 'authController'
+			})
 	}])
 	.factory('profileService', function($resource) {
 		return $resource('/api/profile/:id');
@@ -52,7 +64,13 @@ angular.module('newJobs.userProfile', ['ngRoute', 'ngResource'])
 		};
 
 		/*--------- SOCIAL ACCOUNTS ---------*/
-		$scope.myProfile.social_accounts = [{name: 'facebook'}, {name: 'twitter'}, {name: 'google'}];
+		$scope.myProfile.social_accounts = [{
+			name: 'facebook'
+		}, {
+			name: 'twitter'
+		}, {
+			name: 'google'
+		}];
 		// $scope.soc_accounts = [{name: 'facebook'}, {name: 'twitter'}, {name: 'google'}]
 
 		$scope.updateProfile = function() {
@@ -94,14 +112,79 @@ angular.module('newJobs.userProfile', ['ngRoute', 'ngResource'])
 
 // public profile
 .controller('userController', function($scope, $routeParams, userService, jobService) {
-	$scope.user = userService.get({
-		id: $routeParams.username
-	}, function(err) {
-		console.log(err)
-	});
+		$scope.user = userService.get({
+			id: $routeParams.username
+		}, function(err) {
+			console.log(err)
+		});
 
-	// user jobs
-	$scope.userJobs = jobService.query({
-		username: $routeParams.username
+		// user jobs
+		$scope.userJobs = jobService.query({
+			username: $routeParams.username
+		});
+	})
+	.controller('authController', function($scope, $http, $location, $rootScope, $cookieStore, socket) {
+		if ($location.path() === '/verify') {
+			var user_data = $location.search();
+
+			$http.get('/auth/verify/?email=' + user_data.email + '&key=' + user_data.key).then(function(response) {
+				$scope.success_message = response.data.message;
+			}, function(response) {
+				$scope.error_message = response.data.message;
+			});
+		};
+
+		$scope.user = {};
+		$scope.newUser = {};
+
+		$scope.login = function() {
+			$http.post('/auth/login', $scope.user).success(function(response) {
+				if (response.state === 'success') {
+					$rootScope.authenticated = true;
+					$rootScope.current_user = response.user;
+
+					$cookieStore.put('user', $rootScope.current_user);
+					$location.path('/');
+					location.reload();
+				} else {
+					$scope.error_message = response.message;
+				}
+			});
+		};
+
+		$scope.register = function() {
+			$http.post('/auth/signup', $scope.newUser).then(function(response) {
+
+				// $rootScope.authenticated = true;
+				// $rootScope.current_user = response.user;
+				// $location.path('/');
+				$scope.success_message = response.data.message;
+
+			}, function(response) {
+				$scope.error_message = response.data.message;
+			});
+		}
+		$scope.savePassword = function() {
+			console.log('----- 1 ----');
+			if($scope.newUser.password !== $scope.newUser.repassword) {
+				return $scope.error_message = 'Password does not match' ;
+			};
+			if($scope.newUser.password === '' || $scope.newUser.repassword === '') {
+				return $scope.error_message = 'Password field is empty' ;
+			};
+			$scope.error_message = '';
+
+			$scope.newUser.email = user_data.email;
+			$scope.newUser.key = user_data.key;
+			$http.post('/auth/setpassword', $scope.newUser).then(function(response) {
+				$scope.newUser = {};
+				$scope.success_message = response.data.message;
+			}, function(response) {
+				console.log(response);
+				$scope.error_message = response.data.message;
+			});
+			console.log($scope.newUser);
+		}
+
+		
 	});
-});

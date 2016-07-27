@@ -17,7 +17,7 @@ module.exports = function(passport) {
 	passport.deserializeUser(function(id, done) {
 		console.log('deserializing user');
 		User.findById(id, function(err, user) {
-			if(err) {
+			if (err) {
 				return done(err, false)
 			}
 			done(null, user);
@@ -47,7 +47,7 @@ module.exports = function(passport) {
 		});
 	}));
 
-	/*-----------------Sign up strategy---------------------*/
+	/*----------------- Sign up strategy ---------------------*/
 	passport.use('signup', new LocalStrategy({
 
 		passReqToCallback: true
@@ -87,8 +87,4 @@ module.exports = function(passport) {
 		return bCrypt.compareSync(passwordProvided, user.password);
 	};
 
-	var createHash = function(password) {
-		var salt = bCrypt.genSaltSync(10);
-		return bCrypt.hashSync(password, salt);
-	}
 }
